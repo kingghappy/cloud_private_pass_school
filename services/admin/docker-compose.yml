@@ -1,0 +1,27 @@
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongo_db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: my_database  
+    volumes:
+      - D:\WorkSpace\private_cloud\mongo_db:/data/db
+    ports:
+      - "27017:27017"
+
+  admin:
+    image: admin-service:latest   # tên image bạn đã build
+    container_name: admin-service
+    ports:
+      - "3000:3000"               # ánh xạ PORT ngoài vào trong container
+    environment:
+      - APP_PORT=3000
+      - MONGODB_URI=mongodb://admin:password@mongodb:27017/my_database?authSource=admin
+      - NODE_ENV=production
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+
+    

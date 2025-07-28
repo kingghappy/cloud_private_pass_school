@@ -1,0 +1,45 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+.pnpm-debug.log
+
+# Output directories
+dist/
+build/
+coverage/
+.tmp/
+temp/
+
+# Logs
+logs/
+*.log
+*.out
+*.pid
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# IDEs & Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment
+.env
+.env.*
+.env.local
+
+# Docker
+*.local.yml
+docker-compose.override.yml
+
+# Custom per-service ignores (optional if same as above)
+*/node_modules/
+*/dist/
+*/logs/
