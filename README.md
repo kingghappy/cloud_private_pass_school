@@ -1,0 +1,2 @@
+# cloud_private_pass_schooll
+microservice model implementation
