@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import userRoutes from "./routes/user.route.js";
 import subjectRoutes from "./routes/subject.route.js";
 import classRoutes from "./routes/class.route.js";
+import tokenRoutes from './routes/token.route.js'
 import connMongo from "./db/connMongo.js";
 
 
@@ -20,6 +21,7 @@ app.use(cors());
 app.use("/admin/user", userRoutes);
 app.use("/admin/suject", subjectRoutes);
 app.use("/admin/class", classRoutes);
+app.use("/admin/token", tokenRoutes);
 
 const PORT = process.env.APP_PORT;
 
