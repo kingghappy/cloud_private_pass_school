@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 import connMongo from './db/connMongo.js';
+import authRoute from "./routes/auth.route.js"
 
 
 if (process.env.NODE_ENV !== 'production') {

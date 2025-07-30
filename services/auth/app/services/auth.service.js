@@ -1,6 +1,6 @@
 import User from "../models/user.js";
-import Token from "./../models/token";
-import { comparePass } from "../middlewares/hashpasswrod.js";
+import Token from "./../models/token.js";
+import { comparePass } from "../middlewares/hashpassword.js";
 import {
   generateAccessToken,
   generateRefreshToken,
@@ -39,7 +39,7 @@ const logoutService = async (ref_user) => {
 };
 
 const refreshService = async (refreshToken) => {
-  const payload = verifyToken(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+  const payload = verifyToken(refreshToken, process.env.JWT_REFRESH_SECRET);
   const existToken = await Token.findOne({
     ref_user: payload.ref_user,
     refreshToken,
