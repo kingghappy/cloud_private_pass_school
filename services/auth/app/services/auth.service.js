@@ -16,7 +16,7 @@ const loginService = async (email, password) => {
   const isUser = await comparePass(password, user.password);
   if (!isUser) throw new Error("Wrong password !!");
 
-  const payload = { email: user.email, ref_profile: user.ref_profile };
+  const payload = { email: user.email, ref_user: user._id };
 
   //respone token to client
   const accessToken = generateAccessToken(payload);
@@ -40,13 +40,15 @@ const logoutService = async (ref_user) => {
 
 const refreshService = async (refreshToken) => {
   const payload = verifyToken(refreshToken, process.env.JWT_REFRESH_SECRET);
+  
   const existToken = await Token.findOne({
     ref_user: payload.ref_user,
     refreshToken,
   });
   if (!existToken) throw new Error("Token invalid !!");
 
-  const accessToken = generateAccessToken(payload);
+  const {email, ref_user} = payload
+  const accessToken = generateAccessToken({email, ref_user});
 
   return { accessToken };
 };

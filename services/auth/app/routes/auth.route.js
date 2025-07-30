@@ -1,12 +1,12 @@
 import express from "express";
 
+import authenticate from "./../middlewares/authenticate.js";
 import { login, logout, refresh } from "../controllers/auth.controller.js";
 
-const router = express.Router()
+const router = express.Router();
 
-router.post("/login", login)
-router.post("/", logout)
-router.post("/refresh", refresh)
+router.post("/login", login);
+router.post("/", authenticate, logout);
+router.post("/refresh", refresh);
 
-export default router
-
+export default router;

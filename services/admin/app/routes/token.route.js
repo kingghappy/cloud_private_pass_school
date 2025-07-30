@@ -4,7 +4,7 @@ import { allToken, deleteToken, findToken } from '../controllers/token.controlle
 const router = express.Router()
 
 router.get("/all", allToken)
-router.post("/find", findToken)
-router.delete("/", deleteToken)
+router.get("/find", findToken)
+router.delete("/delete", deleteToken)
 
 export default router

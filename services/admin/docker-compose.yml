@@ -7,7 +7,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: password
       MONGO_INITDB_DATABASE: my_database  
     volumes:
-      - C:\Users\kingh\Documents\Workspace\db\mongo:/data/db
+      - D:\WorkSpace\private_cloud\mongo_db:/data/db
     ports:
       - "27017:27017"
 
