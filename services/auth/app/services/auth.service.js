@@ -14,7 +14,12 @@ const loginService = async (email, password) => {
   const isUser = await comparePass(password, user.password);
   if (!isUser) throw new Error("Wrong password !!");
 
-  const payload = { email: user.email, ref_user: user._id };
+  const payload = {
+    email: user.email,
+    ref_user: user._id,
+    role: user.role,
+    ref_profile: user.ref_profile,
+  };
 
   const accessToken = generateAccessToken(payload);
   const refreshToken = generateRefreshToken(payload);
@@ -28,7 +33,6 @@ const loginService = async (email, password) => {
 };
 
 const logoutService = async (ref_user) => {
-
   await Token.findOneAndDelete({ ref_user });
 
   return {
@@ -38,15 +42,19 @@ const logoutService = async (ref_user) => {
 
 const refreshService = async (refreshToken) => {
   const payload = verifyToken(refreshToken, process.env.JWT_REFRESH_SECRET);
-  
+
   const existToken = await Token.findOne({
     ref_user: payload.ref_user,
     refreshToken,
   });
   if (!existToken) throw new Error("Token invalid !!");
-
-  const {email, ref_user} = payload
-  const accessToken = generateAccessToken({email, ref_user});
+  const { email, ref_user, role, ref_profile } = payload;
+  const accessToken = generateAccessToken({
+    email,
+    ref_user,
+    role,
+    ref_profile,
+  });
 
   return { accessToken };
 };

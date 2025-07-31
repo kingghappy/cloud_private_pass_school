@@ -35,11 +35,11 @@ const logout = (req, res) => {
 };
 
 const refresh = (req, res) => {
-  const { token } = req.body;
-
+  const { refreshToken } = req.body;
+console.log({refreshToken})
   handleRequest(
     res,
-    async () => await refreshService(token).then((data) => ({ data }))
+    async () => await refreshService(refreshToken).then((data) => ({ data }))
   );
 };
 

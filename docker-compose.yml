@@ -15,9 +15,9 @@ services:
     image: admin-service:latest  
     container_name: admin-service
     ports:
-      - "4000:4000"              
+      - "3000:3000"              
     environment:
-      - APP_PORT=4000
+      - APP_PORT=3000
       - MONGODB_URI=mongodb://admin:password@mongodb:27017/my_database?authSource=admin
       - NODE_ENV=production
     depends_on:
@@ -29,12 +29,36 @@ services:
     image: auth-service:latest  
     container_name: auth-service
     ports:
-      - "5000:5000"              
+      - "3001:3001"              
     environment:
-      - APP_PORT=5000
+      - APP_PORT=3001
       - MONGODB_URI=mongodb://admin:password@mongodb:27017/my_database?authSource=admin
       - NODE_ENV=production
     depends_on:
       - mongodb
     restart: unless-stopped
     
+  user:
+    image: user-service:latest  
+    container_name: user-service
+    ports:
+      - "3002:3002"              
+    environment:
+      - APP_PORT=3002
+      - MONGODB_URI=mongodb://admin:password@mongodb:27017/my_database?authSource=admin
+      - NODE_ENV=production
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+
+  api:
+    image: api-service:latest  
+    container_name: api-service
+    ports:
+      - "3003:3003"              
+    environment:
+      - APP_PORT=3003
+      - NODE_ENV=production
+      - USER_SERVICE_URL=http://user-service:3002
+      - AUTH_SERVICE_URL=http://auth-service:3001
+    restart: unless-stopped
