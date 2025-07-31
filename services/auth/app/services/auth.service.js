@@ -8,17 +8,14 @@ import {
 } from "../utils/generateToken.js";
 
 const loginService = async (email, password) => {
-  //find user by email
   const user = await User.findOne({ email });
   if (!user) throw new Error("User not exist !!");
 
-  //check if user doing
   const isUser = await comparePass(password, user.password);
   if (!isUser) throw new Error("Wrong password !!");
 
   const payload = { email: user.email, ref_user: user._id };
 
-  //respone token to client
   const accessToken = generateAccessToken(payload);
   const refreshToken = generateRefreshToken(payload);
 
@@ -31,7 +28,8 @@ const loginService = async (email, password) => {
 };
 
 const logoutService = async (ref_user) => {
-  await Token.deleteOne({ ref_user });
+
+  await Token.findOneAndDelete({ ref_user });
 
   return {
     message: "Logout successful. Please remove the token on client side.",
