@@ -14,6 +14,10 @@ const loginService = async (email, password) => {
   const isUser = await comparePass(password, user.password);
   if (!isUser) throw new Error("Wrong password !!");
 
+  const tokenInDB = await Token.findOne({ ref_user: user._id });
+  console.log({tokenInDB})
+  if (tokenInDB) throw new Error("User is already in another session !!");
+
   const payload = {
     email: user.email,
     ref_user: user._id,

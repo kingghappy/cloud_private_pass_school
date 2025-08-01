@@ -6,6 +6,7 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const loginService = async (email, password) => {
+
   return await axios.post(`${process.env.AUTH_SERVICE_URL}/auth/login`, {
     email,
     password,

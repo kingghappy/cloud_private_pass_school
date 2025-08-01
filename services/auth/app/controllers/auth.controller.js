@@ -14,7 +14,7 @@ if (process.env.NODE_ENV !== "production") {
 
 const login = (req, res) => {
   const { email, password } = req.body;
-
+  console.log({ email, password } )
   handleRequest(
     res,
     async () => await loginService(email, password).then((data) => ({ data }))

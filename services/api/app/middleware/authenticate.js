@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
+import Token from "../model/token.js";
 
-const authenticate = (req, res, next) => {
+const authenticate = async (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -11,7 +12,12 @@ const authenticate = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log({decoded})
+
+    const tokenDoc = await Token.findOne({ ref_user: decoded.ref_user });
+    if (!tokenDoc) {
+      return res.status(401).json({ message: "Session expired or logged out" });
+    }
+
     req.user = decoded;
     next();
   } catch (err) {
@@ -19,4 +25,4 @@ const authenticate = (req, res, next) => {
   }
 };
 
-export default authenticate
+export default authenticate;
